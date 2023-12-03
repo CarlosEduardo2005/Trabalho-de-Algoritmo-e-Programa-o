@@ -1,0 +1,71 @@
+import javax.sound.sampled.*;
+import java.io.IOException;
+import java.net.URL;
+
+public class FutebolSound {
+    private static Clip headerSound;
+    private static Clip kickSound;
+    private static Clip goalSound;
+
+    public static void main(String[] args) {
+        // Inicializa todos os sons
+        initSounds();
+
+        // Toca os sons em um loop
+        playSounds();
+    }
+
+    private static void initSounds() {
+        try {
+            // Obter arquivos de som dos recursos
+            URL headerSoundURL = FutebolSound.class.getResource("/sons/batida.mp3");
+            URL kickSoundURL = FutebolSound.class.getResource("/sons/batida.mp3");
+            URL goalSoundURL = FutebolSound.class.getResource("/sons/gol.mp3");
+
+            // Carregar e abrir arquivos de som
+            headerSound = AudioSystem.getClip();
+            headerSound.open(AudioSystem.getAudioInputStream(headerSoundURL));
+
+            kickSound = AudioSystem.getClip();
+            kickSound.open(AudioSystem.getAudioInputStream(kickSoundURL));
+
+            goalSound = AudioSystem.getClip();
+            goalSound.open(AudioSystem.getAudioInputStream(goalSoundURL));
+
+       
+
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void playSounds() {
+      
+        // Aguarde 5 segundos para simular o progresso do jogo
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Tocar som de chute
+        kickSound.start();
+
+        // Aguarde 5 segundos para simular o progresso do jogo
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Tocar som de gol
+        goalSound.start();
+
+        // Mantenha o thread principal ativo para tocar os sons
+        try {
+            Thread.sleep(Integer.MAX_VALUE);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
