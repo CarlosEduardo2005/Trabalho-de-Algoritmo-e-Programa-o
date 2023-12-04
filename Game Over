@@ -1,0 +1,49 @@
+import javax.swing.*;
+
+public class TelaGameOver extends JFrame {
+
+    // Componentes da tela
+    private JLabel labelMensagem;
+    private JButton botaoReiniciar;
+
+    // Construtor da tela de Game Over
+    public TelaGameOver() {
+        // Configurações básicas da janela
+        setTitle("Game Over");
+        setSize(300, 200);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null); // Layout nulo para posicionar os componentes manualmente
+
+        // Label para exibir a mensagem de Game Over
+        labelMensagem = new JLabel("Fim de Jogo!");
+        labelMensagem.setBounds(100, 50, 100, 30);
+        add(labelMensagem);
+
+        // Botão para reiniciar o jogo
+        botaoReiniciar = new JButton("Reiniciar");
+        botaoReiniciar.setBounds(100, 100, 100, 30);
+        botaoReiniciar.addActionListener(e -> reiniciarJogo());
+        add(botaoReiniciar);
+    }
+
+    // Método para reiniciar o jogo (substitua esse método pelo que reinicia o seu jogo)
+    private void reiniciarJogo() {
+        // Coloque aqui a lógica para reiniciar o jogo
+        // Por exemplo:
+        // Fechar a tela atual e iniciar uma nova partida
+        this.dispose(); // Fecha a tela de Game Over
+        // Inicia uma nova partida ou retorna para a tela inicial do jogo
+        // Exemplo: TelaInicial telaInicial = new TelaInicial();
+        // telaInicial.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        // Criar e exibir a tela de Game Over
+        SwingUtilities.invokeLater(() -> {
+            TelaGameOver telaGameOver = new TelaGameOver();
+            telaGameOver.setVisible(true);
+        });
+    }
+}
+
+
