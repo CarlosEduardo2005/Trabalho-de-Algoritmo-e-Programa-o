@@ -1,0 +1,93 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+public class JogoFutebol extends JFrame implements ActionListener, KeyListener {
+
+    private static final int LARGURA_JANELA = 800;
+    private static final int ALTURA_JANELA = 600;
+
+    private int jogadorY = ALTURA_JANELA / 2;
+    private int velocidadeJogadorY = 0;
+    private int pulosRestantes = 2;
+
+    private Timer timer;
+
+    public JogoFutebol() {
+        setTitle("Jogo fut presidente");
+        setSize(LARGURA_JANELA, ALTURA_JANELA);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        timer = new Timer(10, this);
+        timer.start();
+
+        addKeyListener(this);
+        setFocusable(true);
+        setFocusTraversalKeysEnabled(false);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        moverJogador();
+        verificarColisoes();
+        repaint();
+    }
+
+    public void moverJogador() {
+        jogadorY += velocidadeJogadorY;
+        velocidadeJogadorY -= 1; // Simula a gravidade
+
+        if (jogadorY >= ALTURA_JANELA - 50) {
+            jogadorY = ALTURA_JANELA - 50;
+            pulosRestantes = 2; // Restaura pulos quando toca o chão
+        }
+
+        if (jogadorY < 0) {
+            jogadorY = 0;
+            velocidadeJogadorY = 0; // Impede que o jogador saia do topo da tela
+        }
+    }
+
+    public void verificarColisoes() {
+        // Lógica para verificar colisões com outros elementos do jogo
+    }
+
+    public void paint(Graphics g) {
+        super.paint(g);
+
+        g.setColor(Color.BLUE);
+        g.fillRect(50, jogadorY, 20, 100); // Jogador
+
+        // Adicione aqui a lógica para desenhar outros elementos do jogo (por exemplo, a bola)
+    }
+
+    public void keyTyped(KeyEvent e) {
+        // Não usado, mas necessário para implementar KeyListener
+    }
+
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_SPACE && pulosRestantes > 0) {
+            // Se a barra de espaço é pressionada e ainda há pulos restantes
+            velocidadeJogadorY = 15; // Ajuste conforme necessário
+            pulosRestantes--;
+
+            // Você pode adicionar aqui lógica específica para pulos duplos ou múltiplos
+        }
+    }
+
+    public void keyReleased(KeyEvent e) {
+        // Lógica para lidar com a liberação de teclas, se necessário
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JogoFutebol jogo = new JogoFutebol();
+            jogo.setVisible(true);
+        });
+    }
+}
